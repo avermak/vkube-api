@@ -7,6 +7,8 @@ import io.vertx.ext.web.Router;
 import io.vertx.grpc.server.GrpcServer;
 import io.vertx.grpc.server.GrpcServerResponse;
 
+import java.net.InetAddress;
+
 public class MainVerticle extends AbstractVerticle {
 
     public static final String CONTEXT_API = "/api";
@@ -25,9 +27,13 @@ public class MainVerticle extends AbstractVerticle {
         System.out.println("Creating Router configuration");
         Router router = Router.router(vertx);
         Route apiRoute = router.route().path(CONTEXT_API);
+
+        String hostname = InetAddress.getLocalHost().getHostName();
+        String hostip = InetAddress.getLocalHost().getHostAddress();
+
         apiRoute.handler(ctx -> {
             System.out.println("Received request over http. " + ctx.request().absoluteURI());
-            ctx.response().end("Hello vkube over http!");
+            ctx.response().end("Hello vkube over http! [from host: "+hostname+"/"+hostip+"]");
         });
         System.out.println("API route configured at " + CONTEXT_API);
         Route rpcRoute = router.route(); //.path(CONTEXT_RPC);
@@ -41,7 +47,7 @@ public class MainVerticle extends AbstractVerticle {
             req.handler(hello -> {
                 System.out.println("Received request over gRPC [" + req.fullMethodName() + "]");
                 GrpcServerResponse<HelloRequest, HelloReply> res = req.response();
-                HelloReply reply = HelloReply.newBuilder().setMessage("Hello " + hello.getName()).build();
+                HelloReply reply = HelloReply.newBuilder().setMessage("Hello " + hello.getName() + " [from host: "+hostname+"/"+hostip+"]").build();
                 res.end(reply);
             });
         });
