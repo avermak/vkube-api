@@ -47,4 +47,4 @@ jobs:
         context: .
         platforms: linux/amd64,linux/arm64
         push: true
-        tag: avermak/vkube-hello:latest
+        tags: avermak/vkube-hello:latest
