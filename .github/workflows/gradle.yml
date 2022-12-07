@@ -40,6 +40,6 @@ jobs:
         image: avermak/vkube-api
         registry: docker.io
         dockerfile: Dockerfile
-        platform: linux/amd64, linux/arm64
+        platform: linux/amd64,linux/arm64
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
