@@ -1,2 +1,2 @@
-rootProject.name = "hellovkube"
+rootProject.name = "vkube-hello"
 
