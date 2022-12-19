@@ -6,21 +6,12 @@ spec:
   selector:
     istio: ingressgateway # use istio default controller
   servers:
-<<<<<<< HEAD
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
-=======
     - port:
         number: 80
         name: http
         protocol: HTTP
       hosts:
         - "*"
->>>>>>> 6d737e1d9fb4c1a7424eb27e5a4cd7ea66ff8df3
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -28,22 +19,6 @@ metadata:
   name: vkube-hello
 spec:
   hosts:
-<<<<<<< HEAD
-  - "*"
-  gateways:
-  - vkube-hello-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /api
-    - uri:
-        exact: /rpc
-    route:
-    - destination:
-        host: vkube-hello-service
-        port:
-          number: 2200
-=======
     - "*"
   gateways:
     - vkube-hello-gateway
@@ -58,4 +33,3 @@ spec:
             host: vkube-hello-service
             port:
               number: 2200
->>>>>>> 6d737e1d9fb4c1a7424eb27e5a4cd7ea66ff8df3
