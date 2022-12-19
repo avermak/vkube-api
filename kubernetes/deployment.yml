@@ -21,3 +21,6 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 22000
+          env:
+            - name: NODE_NAME
+              value: HmmNode
