@@ -6,5 +6,6 @@ spec:
   selector:
     app: vkube-hello
   ports:
-    - port: 2200
+    - name: http-vkube-hello
+      port: 2200
       targetPort: 22000
