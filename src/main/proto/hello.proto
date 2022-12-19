@@ -21,4 +21,10 @@ message HelloRequest {
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
+  int64 podTime = 2;
+  string podName = 3;
+  string podIP = 4;
+  string nodeName = 5;
+  string nodeIP = 6;
+
 }
