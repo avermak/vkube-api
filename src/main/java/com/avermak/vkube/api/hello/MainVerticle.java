@@ -86,8 +86,14 @@ public class MainVerticle extends AbstractVerticle {
                         System.out.println("Unable to retrieve podIP. " + ex);
                         ex.printStackTrace();
                     }
-                    String nodeName = System.getProperty("NODE_NAME", "unavailable");
-                    String nodeIP = System.getProperty("NODE_IP", "0.0.0.0");
+                    String nodeName = System.getenv("NODE_NAME");
+                    if (nodeName == null) {
+                        nodeName = "unavailable";
+                    }
+                    String nodeIP = System.getenv("NODE_IP");
+                    if (nodeIP == null) {
+                        nodeIP = "0.0.0.0";
+                    }
                     this.serverInfo.setNodeName(nodeName);
                     this.serverInfo.setNodeIP(nodeIP);
                 }
