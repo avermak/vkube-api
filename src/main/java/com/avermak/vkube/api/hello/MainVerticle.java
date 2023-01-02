@@ -49,7 +49,9 @@ public class MainVerticle extends AbstractVerticle {
         grpcServer.callHandler(HelloVKubeServiceGrpc.getSayHelloMethod(), req -> {
             req.handler(hello -> {
                 System.out.println("Received request over gRPC [" + req.fullMethodName() + "]");
-                req.response().end(buildGRPCResponse(hello, req));
+                HelloReply replyObj = buildGRPCResponse(hello, req);
+                System.out.println("Sending gRPC response ("+replyObj.getSerializedSize()+" bytes): ["+replyObj.toString()+"]");
+                req.response().end(replyObj);
             });
         });
         System.out.println("Starting server on port " + SERVICE_PORT);
