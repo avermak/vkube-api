@@ -6,6 +6,7 @@ spec:
   selector:
     app: vkube-hello
   ports:
-    - name: http-vkube-hello
+    - name: grpc
+      protocol: TCP
       port: 2200
       targetPort: 22000
