@@ -49,7 +49,9 @@ public class MainVerticle extends AbstractVerticle {
         grpcServer.callHandler(HelloVKubeServiceGrpc.getSayHelloMethod(), req -> {
             req.handler(hello -> {
                 System.out.println("Received request over gRPC [" + req.fullMethodName() + "]");
-                req.response().end(buildGRPCResponse(hello, req));
+                HelloReply replyObj = buildGRPCResponse(hello, req);
+                System.out.println("Sending gRPC response ("+replyObj.getSerializedSize()+" bytes): ["+replyObj.toString()+"]");
+                req.response().end(replyObj);
             });
         });
         System.out.println("Starting server on port " + SERVICE_PORT);
@@ -86,8 +88,14 @@ public class MainVerticle extends AbstractVerticle {
                         System.out.println("Unable to retrieve podIP. " + ex);
                         ex.printStackTrace();
                     }
-                    String nodeName = System.getProperty("NODE_NAME", "unavailable");
-                    String nodeIP = System.getProperty("NODE_IP", "0.0.0.0");
+                    String nodeName = System.getenv("NODE_NAME");
+                    if (nodeName == null) {
+                        nodeName = "unavailable";
+                    }
+                    String nodeIP = System.getenv("NODE_IP");
+                    if (nodeIP == null) {
+                        nodeIP = "0.0.0.0";
+                    }
                     this.serverInfo.setNodeName(nodeName);
                     this.serverInfo.setNodeIP(nodeIP);
                 }
