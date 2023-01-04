@@ -8,28 +8,7 @@ spec:
   servers:
     - port:
         number: 80
-        name: http
-        protocol: HTTP
+        name: grpc-vkube
+        protocol: GRPC
       hosts:
         - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: vkube-hello
-spec:
-  hosts:
-    - "*"
-  gateways:
-    - vkube-hello-gateway
-  http:
-    - match:
-        - uri:
-            prefix: /api
-        - uri:
-            exact: /rpc
-      route:
-        - destination:
-            host: vkube-hello-service
-            port:
-              number: 2200
