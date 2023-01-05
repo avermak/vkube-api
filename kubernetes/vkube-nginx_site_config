@@ -1,0 +1,30 @@
+index index.html index.htm;
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2 ipv6only=on;
+
+    server_name _;
+
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+    
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    
+    location /hello/api {
+        proxy_pass http://10.108.98.100/api;
+        proxy_http_version 1.1;
+    }
+    location /com.avermak.vkube.api.hello.HelloVKubeService {
+        grpc_pass grpc://10.108.98.100:80;
+    }
+    
+    location /kiali {
+	proxy_pass http://10.99.51.37:20001/kiali;
+    }
+    location /grafana {
+        proxy_pass http://10.107.0.119:3000;
+    }
+}
