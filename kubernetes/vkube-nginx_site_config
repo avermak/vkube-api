@@ -20,6 +20,11 @@ server {
     location /com.avermak.vkube.api.hello.HelloVKubeService {
         grpc_pass grpc://10.108.98.100:80;
     }
+
+    location /health {
+        proxy_pass http://10.110.242.42:2210/health;
+        proxy_http_version 1.1;
+    }
     
     location /kiali {
 	proxy_pass http://10.99.51.37:20001/kiali;
